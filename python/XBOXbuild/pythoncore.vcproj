@@ -339,6 +339,9 @@
 				RelativePath="..\Include\pygetopt.h">
 			</File>
 			<File
+				RelativePath="..\Include\pyhash.h">
+			</File>
+			<File
 				RelativePath="..\Include\pymacro.h">
 			</File>
 			<File
@@ -459,6 +462,9 @@
 				RelativePath="..\Modules\_math.h">
 			</File>
 			<File
+				RelativePath="..\Modules\_opcode.c">
+			</File>
+			<File
 				RelativePath="..\Modules\_operator.c">
 			</File>
 			<File
@@ -478,6 +484,9 @@
 			</File>
 			<File
 				RelativePath="..\Modules\_threadmodule.c">
+			</File>
+			<File
+				RelativePath="..\Modules\_tracemalloc.c">
 			</File>
 			<File
 				RelativePath="..\Modules\_weakref.c">
@@ -508,6 +517,12 @@
 			</File>
 			<File
 				RelativePath="..\Modules\gcmodule.c">
+			</File>
+			<File
+				RelativePath="..\Modules\hashtable.c">
+			</File>
+			<File
+				RelativePath="..\Modules\hashtable.h">
 			</File>
 			<File
 				RelativePath="..\Modules\itertoolsmodule.c">
@@ -1030,6 +1045,9 @@
 			</File>
 			<File
 				RelativePath="..\Python\pyfpe.c">
+			</File>
+			<File
+				RelativePath="..\Python\pyhash.c">
 			</File>
 			<File
 				RelativePath="..\Python\pymath.c">
