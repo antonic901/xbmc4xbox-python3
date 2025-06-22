@@ -4,6 +4,7 @@
  * Thanks go to Tim Peters and Michael Hudson for debugging.
  */
 
+#include <winsock2.h>
 #define PY_SSIZE_T_CLEAN
 #include <Python.h>
 #include "structmember.h"

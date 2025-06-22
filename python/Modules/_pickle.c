@@ -1,6 +1,8 @@
 #include "Python.h"
 #include "structmember.h"
 
+#define SIZE_MAX PY_SIZE_MAX
+
 PyDoc_STRVAR(pickle_module_doc,
 "Optimized C implementation for the Python pickle module.");
 
@@ -28,11 +30,11 @@ enum opcode {
     POP             = '0',
     POP_MARK        = '1',
     DUP             = '2',
-    FLOAT           = 'F',
-    INT             = 'I',
+    PK_FLOAT           = 'F',
+    PK_INT             = 'I',
     BININT          = 'J',
     BININT1         = 'K',
-    LONG            = 'L',
+    PK_LONG            = 'L',
     BININT2         = 'M',
     NONE            = 'N',
     PERSID          = 'P',
@@ -1765,7 +1767,7 @@ save_long(PicklerObject *self, PyObject *obj)
     long val;
     int status = 0;
 
-    const char long_op = LONG;
+    const char long_op = PK_LONG;
 
     val= PyLong_AsLong(obj);
     if (val == -1 && PyErr_Occurred()) {
@@ -1936,7 +1938,7 @@ save_float(PicklerObject *self, PyObject *obj)
     else {
         int result = -1;
         char *buf = NULL;
-        char op = FLOAT;
+        char op = PK_FLOAT;
 
         if (_Pickler_Write(self, &op, 1) < 0)
             goto done;
@@ -6109,11 +6111,11 @@ load(UnpicklerObject *self)
         OP(BININT, load_binint)
         OP(BININT1, load_binint1)
         OP(BININT2, load_binint2)
-        OP(INT, load_int)
-        OP(LONG, load_long)
+        OP(PK_INT, load_int)
+        OP(PK_LONG, load_long)
         OP_ARG(LONG1, load_counted_long, 1)
         OP_ARG(LONG4, load_counted_long, 4)
-        OP(FLOAT, load_float)
+        OP(PK_FLOAT, load_float)
         OP(BINFLOAT, load_binfloat)
         OP_ARG(SHORT_BINBYTES, load_counted_binbytes, 1)
         OP_ARG(BINBYTES, load_counted_binbytes, 4)

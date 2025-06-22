@@ -792,15 +792,8 @@ EXTINLINE void mpd_copy_flags(mpd_t *result, const mpd_t *a);
 /*                              Error Macros                                  */
 /******************************************************************************/
 
-#define mpd_err_fatal(...) \
-    do {fprintf(stderr, "%s:%d: error: ", __FILE__, __LINE__); \
-        fprintf(stderr, __VA_ARGS__);  fputc('\n', stderr);    \
-        abort();                                               \
-    } while (0)
-#define mpd_err_warn(...) \
-    do {fprintf(stderr, "%s:%d: warning: ", __FILE__, __LINE__); \
-        fprintf(stderr, __VA_ARGS__); fputc('\n', stderr);       \
-    } while (0)
+static void mpd_err_fatal(const char *fmt, ...) { (void)fmt; }
+static void mpd_err_warn(const char *fmt, ...) { (void)fmt; }
 
 
 /******************************************************************************/

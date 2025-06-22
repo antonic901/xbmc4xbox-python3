@@ -15,7 +15,7 @@
 */
 
 #define PY_SSIZE_T_CLEAN
-
+#define XBOX_NO_XBP_DEFINE
 #include "Python.h"
 
 #ifdef WITH_THREAD
@@ -3573,6 +3573,7 @@ parseKeyUsage(PCCERT_CONTEXT pCertCtx, DWORD flags)
     return retval;
 }
 
+#ifndef _XBOX
 PyDoc_STRVAR(PySSL_enum_certificates_doc,
 "enum_certificates(store_name) -> []\n\
 \n\
@@ -3742,6 +3743,7 @@ PySSL_enum_crls(PyObject *self, PyObject *args, PyObject *kwds)
     }
     return result;
 }
+#endif /* _XBOX */
 
 #endif /* _MSC_VER */
 
@@ -3766,7 +3768,7 @@ static PyMethodDef PySSL_methods[] = {
 #endif
     {"get_default_verify_paths", (PyCFunction)PySSL_get_default_verify_paths,
      METH_NOARGS, PySSL_get_default_verify_paths_doc},
-#ifdef _MSC_VER
+#if defined(_MSC_VER) && !defined(_XBOX)
     {"enum_certificates", (PyCFunction)PySSL_enum_certificates,
      METH_VARARGS | METH_KEYWORDS, PySSL_enum_certificates_doc},
     {"enum_crls", (PyCFunction)PySSL_enum_crls,

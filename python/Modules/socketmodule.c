@@ -92,6 +92,7 @@ Local naming conventions:
 # pragma weak inet_aton
 #endif
 
+#include <winsock2.h>
 #include "Python.h"
 #include "structmember.h"
 
@@ -134,9 +135,6 @@ setblocking(0 | 1) -- set or clear the blocking I/O flag\n\
 setsockopt(level, optname, value) -- set socket options\n\
 settimeout(None | float) -- set or clear the timeout\n\
 shutdown(how) -- shut down traffic in one or both directions\n\
-if_nameindex() -- return all network interface indices and names\n\
-if_nametoindex(name) -- return the corresponding interface index\n\
-if_indextoname(index) -- return the corresponding interface name\n\
 \n\
  [*] not available on all platforms!");
 
@@ -4107,7 +4105,7 @@ static PyTypeObject sock_type = {
 static PyObject *
 socket_gethostname(PyObject *self, PyObject *unused)
 {
-#ifdef MS_WINDOWS
+#if 0
     /* Don't use winsock's gethostname, as this returns the ANSI
        version of the hostname, whereas we need a Unicode string.
        Otherwise, gethostname apparently also returns the DNS name. */
