@@ -1226,7 +1226,7 @@ convertenviron(void)
     if (environ == NULL)
         environ = *_NSGetEnviron();
 #endif
-#ifdef MS_WINDOWS
+#if defined(MS_WINDOWS) && !defined(_XBOX)
     /* _wenviron must be initialized in this way if the program is started
        through main() instead of wmain(). */
     _wgetenv(L"");
@@ -8928,7 +8928,7 @@ static PyObject *
 posix_putenv(PyObject *self, PyObject *args)
 {
     PyObject *newstr = NULL;
-#ifdef MS_WINDOWS
+#if defined(MS_WINDOWS) && !defined(_XBOX)
     PyObject *os1, *os2;
     wchar_t *newenv;
 
@@ -8942,14 +8942,12 @@ posix_putenv(PyObject *self, PyObject *args)
         PyErr_NoMemory();
         goto error;
     }
-#ifndef _XBOX
     if (_MAX_ENV < PyUnicode_GET_LENGTH(newstr)) {
         PyErr_Format(PyExc_ValueError,
                      "the environment variable is longer than %u characters",
                      _MAX_ENV);
         goto error;
     }
-#endif
 
     newenv = PyUnicode_AsUnicode(newstr);
     if (newenv == NULL)
