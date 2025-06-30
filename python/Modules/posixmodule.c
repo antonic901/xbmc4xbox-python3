@@ -149,6 +149,7 @@ corresponding Unix manual entries for more information on calls.");
 #define HAVE_WAIT       1
 #else
 #ifdef _MSC_VER         /* Microsoft compiler */
+/* XBOX
 #define HAVE_GETPPID    1
 #define HAVE_GETLOGIN   1
 #define HAVE_SPAWNV     1
@@ -156,6 +157,7 @@ corresponding Unix manual entries for more information on calls.");
 #define HAVE_PIPE       1
 #define HAVE_SYSTEM     1
 #define HAVE_CWAIT      1
+*/
 #define HAVE_FSYNC      1
 #define fsync _commit
 #else
@@ -353,7 +355,11 @@ static int win32_can_symlink = 0;
 #undef STAT
 #undef FSTAT
 #undef STRUCT_STAT
-#if defined(MS_WINDOWS) && !defined(_XBOX)
+#ifdef _XBOX
+#       define STAT _stati64
+#       define FSTAT _fstati64
+#       define STRUCT_STAT struct _stati64
+#elif defined(MS_WINDOWS)
 #       define STAT win32_stat
 #       define LSTAT win32_lstat
 #       define FSTAT win32_fstat

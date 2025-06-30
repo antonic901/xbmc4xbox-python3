@@ -580,12 +580,13 @@ PyObject *PyErr_SetExcFromWindowsErrWithFilenameObjects(
     PyObject *filenameObject,
     PyObject *filenameObject2)
 {
-    int len;
+    int len = 0;
     WCHAR *s_buf = NULL; /* Free via LocalFree */
     PyObject *message;
     PyObject *args, *v;
     DWORD err = (DWORD)ierr;
     if (err==0) err = GetLastError();
+#ifndef _XBOX
     len = FormatMessageW(
         /* Error API error */
         FORMAT_MESSAGE_ALLOCATE_BUFFER |
@@ -598,6 +599,7 @@ PyObject *PyErr_SetExcFromWindowsErrWithFilenameObjects(
         (LPWSTR) &s_buf,
         0,              /* size not used */
         NULL);          /* no args */
+#endif
     if (len==0) {
         /* Only seen this in out of mem situations */
         message = PyUnicode_FromFormat("Windows Error 0x%x", err);
