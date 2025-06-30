@@ -348,7 +348,7 @@ typedef unsigned char PY_UINT8_T;
 #endif
 
 
-#ifdef _MSC_VER
+#if defined(_MSC_VER) && _MSC_VER>=1400
 #  define ROTATE(x, b)  _rotl64(x, b)
 #else
 #  define ROTATE(x, b) (PY_UINT64_T)( ((x) << (b)) | ( (x) >> (64 - (b))) )
