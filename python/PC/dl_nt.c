@@ -89,22 +89,26 @@ BOOL    WINAPI  DllMain (HANDLE hInst,
         case DLL_PROCESS_ATTACH:
             PyWin_DLLhModule = hInst;
             // 1000 is a magic number I picked out of the air.  Could do with a #define, I spose...
-            LoadString(hInst, 1000, dllVersionBuffer, sizeof(dllVersionBuffer));
+            strcpy(dllVersionBuffer, "3.4.10"); // XBOX
 
 #if HAVE_SXS
             // and capture our activation context for use when loading extensions.
+            /*
             _LoadActCtxPointers();
             if (pfnGetCurrentActCtx && pfnAddRefActCtx)
                 if ((*pfnGetCurrentActCtx)(&PyWin_DLLhActivationContext))
                     if (!(*pfnAddRefActCtx)(PyWin_DLLhActivationContext))
                         OutputDebugString("Python failed to load the default activation context\n");
+            */
 #endif
             break;
 
         case DLL_PROCESS_DETACH:
 #if HAVE_SXS
+            /*
             if (pfnReleaseActCtx)
                 (*pfnReleaseActCtx)(PyWin_DLLhActivationContext);
+            */
 #endif
             break;
     }

@@ -80,7 +80,7 @@ struct _inittab _PyImport_Inittab[] = {
     {"_ast", PyInit__ast},
 #ifdef MS_WINDOWS
 #ifndef MS_WINI64
-    {"audioop", PyInit_audioop},
+    // {"audioop", PyInit_audioop},
 #endif
 #endif
     {"binascii", PyInit_binascii},
@@ -101,7 +101,7 @@ struct _inittab _PyImport_Inittab[] = {
     {"_thread", PyInit__thread},
 #endif
 #ifdef WIN32
-    {"msvcrt", PyInit_msvcrt},
+    // {"msvcrt", PyInit_msvcrt},
     {"_locale", PyInit__locale},
 #endif
     {"_tracemalloc", PyInit__tracemalloc},
@@ -117,11 +117,11 @@ struct _inittab _PyImport_Inittab[] = {
     {"itertools", PyInit_itertools},
     {"_collections", PyInit__collections},
     {"_symtable", PyInit__symtable},
-    {"mmap", PyInit_mmap},
+    // {"mmap", PyInit_mmap},
     {"_csv", PyInit__csv},
     {"_sre", PyInit__sre},
     {"parser", PyInit_parser},
-    {"winreg", PyInit_winreg},
+    // {"winreg", PyInit_winreg},
     {"_struct", PyInit__struct},
     {"_datetime", PyInit__datetime},
     {"_functools", PyInit__functools},
@@ -133,12 +133,12 @@ struct _inittab _PyImport_Inittab[] = {
 
     /* CJK codecs */
     {"_multibytecodec", PyInit__multibytecodec},
-    {"_codecs_cn", PyInit__codecs_cn},
-    {"_codecs_hk", PyInit__codecs_hk},
-    {"_codecs_iso2022", PyInit__codecs_iso2022},
-    {"_codecs_jp", PyInit__codecs_jp},
-    {"_codecs_kr", PyInit__codecs_kr},
-    {"_codecs_tw", PyInit__codecs_tw},
+    // {"_codecs_cn", PyInit__codecs_cn},
+    // {"_codecs_hk", PyInit__codecs_hk},
+    // {"_codecs_iso2022", PyInit__codecs_iso2022},
+    // {"_codecs_jp", PyInit__codecs_jp},
+    // {"_codecs_kr", PyInit__codecs_kr},
+    // {"_codecs_tw", PyInit__codecs_tw},
 
 /* tools/freeze/makeconfig.py marker for additional "_inittab" entries */
 /* -- ADDMODULE MARKER 2 -- */
