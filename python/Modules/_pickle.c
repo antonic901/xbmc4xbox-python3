@@ -1,3 +1,5 @@
+#define XBOX_NO_XBP_DEFINE
+
 #include "Python.h"
 #include "structmember.h"
 

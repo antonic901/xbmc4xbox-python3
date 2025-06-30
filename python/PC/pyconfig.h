@@ -75,6 +75,15 @@ WIN32 is still required for the locale module.
 #define LONG_BIT	32
 #define WORD_BIT 32
 
+/* only set when building xbmc rather than the python library. would make sense
+ * to set PYTHONPATH for the library build too, but that's not how it was previously
+ * on xbmc.
+*/
+#ifdef _XBMC
+#	define PYTHONPATH L"Q:\\system\\python" // XBOX
+#	define Py_NO_ENABLE_SHARED
+#endif
+
 #define MS_WIN32 /* only support win32 and greater. */
 #define MS_WINDOWS
 #ifndef PYTHONPATH
@@ -182,6 +191,7 @@ WIN32 is still required for the locale module.
 #define _W64
 #endif
 
+#ifndef _XBMC
 /* Define like size_t, omitting the "unsigned" */
 #ifdef MS_WIN64
 typedef __int64 ssize_t;
@@ -189,6 +199,7 @@ typedef __int64 ssize_t;
 typedef _W64 int ssize_t;
 #endif
 #define HAVE_SSIZE_T 1
+#endif /* _XBMC */
 
 #if defined(MS_WIN32) && !defined(MS_WIN64)
 #if defined(_M_IX86)
@@ -317,7 +328,7 @@ Py_NO_ENABLE_SHARED to find out.  Also support MS_NO_COREDLL for b/w compat */
 /* For an MSVC DLL, we can nominate the .lib files used by extensions */
 #ifdef MS_COREDLL
 #	ifndef Py_BUILD_CORE /* not building the core - must be an ext */
-#		if defined(_MSC_VER)
+#		if defined(_MSC_VER) && ! defined(_XBMC)
 			/* So MSVC users need not specify the .lib file in
 			their Makefile (other compilers are generally
 			taken care of by distutils.) */
@@ -365,7 +376,7 @@ Py_NO_ENABLE_SHARED to find out.  Also support MS_NO_COREDLL for b/w compat */
 #	endif
 #endif
 
-#ifdef _DEBUG
+#if defined(_DEBUG) && ! defined(_XBMC)
 #	define Py_DEBUG
 #endif
 

@@ -774,7 +774,7 @@ _Py_open(const char *pathname, int flags)
 {
     int fd;
 #ifdef MS_WINDOWS
-    fd = open(pathname, flags | O_NOINHERIT);
+    fd = open(pathname, flags | O_NOINHERIT, 00666);
     if (fd < 0)
         return fd;
 #else
@@ -786,7 +786,7 @@ _Py_open(const char *pathname, int flags)
 #else
     atomic_flag_works = NULL;
 #endif
-    fd = open(pathname, flags);
+    fd = open(pathname, flags, 00666);
     if (fd < 0)
         return fd;
 
