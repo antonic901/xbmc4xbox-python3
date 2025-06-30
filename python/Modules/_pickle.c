@@ -1,6 +1,8 @@
 #include "Python.h"
 #include "structmember.h"
 
+#define SIZE_MAX PY_SIZE_MAX
+
 PyDoc_STRVAR(pickle_module_doc,
 "Optimized C implementation for the Python pickle module.");
 

@@ -8924,7 +8924,7 @@ static PyObject *
 posix_putenv(PyObject *self, PyObject *args)
 {
     PyObject *newstr = NULL;
-#ifdef MS_WINDOWS
+#if 0 // Xbox
     PyObject *os1, *os2;
     wchar_t *newenv;
 
