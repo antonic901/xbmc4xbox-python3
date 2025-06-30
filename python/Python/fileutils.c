@@ -805,7 +805,7 @@ FILE *
 _Py_wfopen(const wchar_t *path, const wchar_t *mode)
 {
     FILE *f;
-#ifndef MS_WINDOWS
+#if 1 // Xbox
     char *cpath;
     char cmode[10];
     size_t r;
@@ -855,7 +855,7 @@ FILE*
 _Py_fopen_obj(PyObject *path, const char *mode)
 {
     FILE *f;
-#ifdef MS_WINDOWS
+#if 0 // Xbox
     wchar_t *wpath;
     wchar_t wmode[10];
     int usize;
