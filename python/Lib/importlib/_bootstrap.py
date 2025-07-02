@@ -2436,9 +2436,9 @@ def _setup(sys_module, _imp_module):
     setattr(self_module, '_weakref', weakref_module)
 
     # Directly load the winreg module (needed during bootstrap).
-    if builtin_os == 'nt':
-        winreg_module = _builtin_from_name('winreg')
-        setattr(self_module, '_winreg', winreg_module)
+    # if builtin_os == 'nt':
+        # winreg_module = _builtin_from_name('winreg')
+        # setattr(self_module, '_winreg', winreg_module)
 
     # Constants
     setattr(self_module, '_relax_case', _make_relax_case())
@@ -2456,6 +2456,6 @@ def _install(sys_module, _imp_module):
     sys.path_hooks.extend([FileFinder.path_hook(*supported_loaders)])
     sys.meta_path.append(BuiltinImporter)
     sys.meta_path.append(FrozenImporter)
-    if _os.__name__ == 'nt':
-        sys.meta_path.append(WindowsRegistryFinder)
+    # if _os.__name__ == 'nt':
+        # sys.meta_path.append(WindowsRegistryFinder)
     sys.meta_path.append(PathFinder)
