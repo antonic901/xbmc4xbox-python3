@@ -1953,7 +1953,7 @@ sys_update_path(int argc, wchar_t **argv)
 #if SEP == '\\' /* Special case for MS filename syntax */
     if (_HAVE_SCRIPT_ARGUMENT(argc, argv)) {
         wchar_t *q;
-#if defined(MS_WINDOWS) && !defined(MS_WINCE)
+#if defined(MS_WINDOWS) && !defined(MS_WINCE) && !defined(_XBOX)
         /* This code here replaces the first element in argv with the full
         path that it represents. Under CE, there are no relative paths so
         the argument must be the full path anyway. */

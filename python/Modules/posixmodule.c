@@ -3933,6 +3933,7 @@ posix__getfullpathname(PyObject *self, PyObject *args)
     const char *path;
     char outbuf[MAX_PATH];
     char *temp;
+#ifndef _XBOX
     PyObject *po;
 
     if (PyArg_ParseTuple(args, "U|:_getfullpathname", &po))
@@ -3966,6 +3967,7 @@ posix__getfullpathname(PyObject *self, PyObject *args)
     /* Drop the argument parsing error as narrow strings
        are also valid. */
     PyErr_Clear();
+#endif
 
     if (!PyArg_ParseTuple (args, "y:_getfullpathname",
                            &path))
