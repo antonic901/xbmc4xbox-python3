@@ -863,7 +863,7 @@ writeRandomBytes_arc4random(void * target, size_t count) {
 #endif  /* defined(HAVE_ARC4RANDOM) */
 
 
-#ifdef _WIN32
+#if defined(_WIN32) && !defined(_XBOX)
 
 typedef BOOLEAN (APIENTRY *RTLGENRANDOM_FUNC)(PVOID, ULONG);
 HMODULE _Expat_LoadLibrary(LPCTSTR filename);  /* see loadlibrary.c */
@@ -950,7 +950,7 @@ generate_hash_secret_salt(XML_Parser parser)
   return ENTROPY_DEBUG("arc4random", entropy);
 #else
   /* Try high quality providers first .. */
-#ifdef _WIN32
+#if defined(_WIN32) && !defined(_XBOX)
   if (writeRandomBytes_RtlGenRandom((void *)&entropy, sizeof(entropy))) {
     return ENTROPY_DEBUG("RtlGenRandom", entropy);
   }
