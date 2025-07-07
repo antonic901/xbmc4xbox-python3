@@ -15,6 +15,7 @@
 */
 
 #define PY_SSIZE_T_CLEAN
+#define XBOX_NO_XBP_DEFINE
 
 #include "Python.h"
 

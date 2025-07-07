@@ -149,6 +149,7 @@ corresponding Unix manual entries for more information on calls.");
 #define HAVE_WAIT       1
 #else
 #ifdef _MSC_VER         /* Microsoft compiler */
+/* XBOX
 #define HAVE_GETPPID    1
 #define HAVE_GETLOGIN   1
 #define HAVE_SPAWNV     1
@@ -156,6 +157,7 @@ corresponding Unix manual entries for more information on calls.");
 #define HAVE_PIPE       1
 #define HAVE_SYSTEM     1
 #define HAVE_CWAIT      1
+*/
 #define HAVE_FSYNC      1
 #define fsync _commit
 #else
@@ -353,7 +355,11 @@ static int win32_can_symlink = 0;
 #undef STAT
 #undef FSTAT
 #undef STRUCT_STAT
-#ifdef MS_WINDOWS
+#ifdef _XBOX
+#       define STAT _stati64
+#       define FSTAT _fstati64
+#       define STRUCT_STAT struct _stati64
+#elif defined(MS_WINDOWS)
 #       define STAT win32_stat
 #       define LSTAT win32_lstat
 #       define FSTAT win32_fstat
@@ -1136,7 +1142,7 @@ _PyVerify_fd_dup2(int fd1, int fd2)
 #define _PyVerify_fd_dup2(A, B) (1)
 #endif
 
-#ifdef MS_WINDOWS
+#if defined(MS_WINDOWS) && !defined(_XBOX)
 /* The following structure was copied from
    http://msdn.microsoft.com/en-us/library/ms791514.aspx as the required
    include doesn't seem to be present in the Windows SDK (at least as included
@@ -1474,7 +1480,9 @@ win32_wchdir(LPCWSTR path)
      UTC and local time
    Therefore, we implement our own stat, based on the Win32 API directly.
 */
+#ifndef _XBOX
 #define HAVE_STAT_NSEC 1
+#endif
 
 struct win32_stat{
     unsigned long st_dev;
@@ -2355,7 +2363,7 @@ posix_do_stat(char *function_name, path_t *path,
     if (path->fd != -1)
         result = FSTAT(path->fd, &st);
     else
-#ifdef MS_WINDOWS
+#if defined(MS_WINDOWS) && !defined(_XBOX)
     if (path->wide) {
         if (follow_symlinks)
             result = win32_stat_w(path->wide, &st);
@@ -2364,7 +2372,7 @@ posix_do_stat(char *function_name, path_t *path,
     }
     else
 #endif
-#if defined(HAVE_LSTAT) || defined(MS_WINDOWS)
+#if defined(HAVE_LSTAT) || defined(MS_WINDOWS) && !defined(_XBOX)
     if ((!follow_symlinks) && (dir_fd == DEFAULT_DIR_FD))
         result = LSTAT(path->narrow, &st);
     else
@@ -3507,7 +3515,7 @@ posix_getcwd_bytes(PyObject *self)
     return posix_getcwd(1);
 }
 
-#if ((!defined(HAVE_LINK)) && defined(MS_WINDOWS))
+#if ((!defined(HAVE_LINK)) && defined(MS_WINDOWS) && !defined(_XBOX))
 #define HAVE_LINK 1
 #endif
 
@@ -4083,6 +4091,7 @@ check:
 PyDoc_STRVAR(posix__getvolumepathname__doc__,
 "Return volume mount point of the specified path.");
 
+#ifndef _XBOX
 /* A helper function for ismount on windows */
 static PyObject *
 posix__getvolumepathname(PyObject *self, PyObject *args)
@@ -4127,6 +4136,7 @@ exit:
     return result;
 }
 /* end of posix__getvolumepathname */
+#endif
 
 #endif /* MS_WINDOWS */
 
@@ -7448,7 +7458,7 @@ exit:
 #endif /* HAVE_SYMLINK */
 
 
-#if !defined(HAVE_READLINK) && defined(MS_WINDOWS)
+#if !defined(HAVE_READLINK) && defined(MS_WINDOWS) && !defined(_XBOX)
 
 static PyObject *
 win_readlink(PyObject *self, PyObject *args, PyObject *kwargs)
@@ -11273,7 +11283,7 @@ static PyMethodDef posix_methods[] = {
     METH_NOARGS, posix_getcwd__doc__},
     {"getcwdb",         (PyCFunction)posix_getcwd_bytes,
     METH_NOARGS, posix_getcwdb__doc__},
-#if defined(HAVE_LINK) || defined(MS_WINDOWS)
+#if defined(HAVE_LINK) || defined(MS_WINDOWS) && !defined(_XBOX)
     {"link",            (PyCFunction)posix_link,
                         METH_VARARGS | METH_KEYWORDS,
                         posix_link__doc__},
@@ -11301,7 +11311,7 @@ static PyMethodDef posix_methods[] = {
                         METH_VARARGS | METH_KEYWORDS,
                         readlink__doc__},
 #endif /* HAVE_READLINK */
-#if !defined(HAVE_READLINK) && defined(MS_WINDOWS)
+#if !defined(HAVE_READLINK) && defined(MS_WINDOWS) && !defined(_XBOX)
     {"readlink",        (PyCFunction)win_readlink,
                         METH_VARARGS | METH_KEYWORDS,
                         readlink__doc__},
@@ -11630,7 +11640,9 @@ static PyMethodDef posix_methods[] = {
     {"_getfinalpathname",       posix__getfinalpathname, METH_VARARGS, NULL},
     {"_isdir",                  posix__isdir, METH_VARARGS, posix__isdir__doc__},
     {"_getdiskusage",           win32__getdiskusage, METH_VARARGS, win32__getdiskusage__doc__},
+#ifndef _XBOX
     {"_getvolumepathname",      posix__getvolumepathname, METH_VARARGS, posix__getvolumepathname__doc__},
+#endif
 #endif
 #ifdef HAVE_GETLOADAVG
     {"getloadavg",      posix_getloadavg, METH_NOARGS, posix_getloadavg__doc__},

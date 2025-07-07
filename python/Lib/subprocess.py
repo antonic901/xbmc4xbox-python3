@@ -393,8 +393,8 @@ class TimeoutExpired(SubprocessError):
 
 if mswindows:
     import threading
-    import msvcrt
-    import _winapi
+    # import msvcrt
+    # import _winapi
     class STARTUPINFO:
         dwFlags = 0
         hStdInput = None
@@ -427,7 +427,7 @@ else:
 __all__ = ["Popen", "PIPE", "STDOUT", "call", "check_call", "getstatusoutput",
            "getoutput", "check_output", "CalledProcessError", "DEVNULL"]
 
-if mswindows:
+if mswindows and False:
     from _winapi import (CREATE_NEW_CONSOLE, CREATE_NEW_PROCESS_GROUP,
                          STD_INPUT_HANDLE, STD_OUTPUT_HANDLE,
                          STD_ERROR_HANDLE, SW_HIDE,
@@ -748,6 +748,7 @@ class Popen(object):
                  restore_signals=True, start_new_session=False,
                  pass_fds=()):
         """Create new Popen instance."""
+        return False
         _cleanup()
         # Held while anything is calling waitpid before returncode has been
         # updated to prevent clobbering returncode if wait() or poll() are
@@ -993,6 +994,7 @@ class Popen(object):
             """Construct and return tuple with IO objects:
             p2cread, p2cwrite, c2pread, c2pwrite, errread, errwrite
             """
+            return (None, None, None, None, None, None)
             if stdin is None and stdout is None and stderr is None:
                 return (-1, -1, -1, -1, -1, -1)
 
@@ -1132,9 +1134,9 @@ class Popen(object):
             _winapi.CloseHandle(ht)
 
         def _internal_poll(self, _deadstate=None,
-                _WaitForSingleObject=_winapi.WaitForSingleObject,
-                _WAIT_OBJECT_0=_winapi.WAIT_OBJECT_0,
-                _GetExitCodeProcess=_winapi.GetExitCodeProcess):
+                _WaitForSingleObject=None,
+                _WAIT_OBJECT_0=None,
+                _GetExitCodeProcess=None):
             """Check if child process has terminated.  Returns returncode
             attribute.
 
