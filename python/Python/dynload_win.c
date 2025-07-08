@@ -270,8 +270,6 @@ dl_funcptr _PyImport_GetDynLoadWindows(const char *shortname,
             return NULL;
         } else {
 // for now we disable version checking
-
-
 #ifndef _XBOX
             char buffer[256];
 

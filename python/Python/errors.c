@@ -475,7 +475,9 @@ PyErr_SetFromErrnoWithFilenameObjects(PyObject *exc, PyObject *filenameObject, P
             message = PyUnicode_FromString(_sys_errlist[i]);
         }
         else {
-            int len = FormatMessageW(
+            int len = 0;
+#ifndef _XBOX
+            len = FormatMessageW(
                 FORMAT_MESSAGE_ALLOCATE_BUFFER |
                 FORMAT_MESSAGE_FROM_SYSTEM |
                 FORMAT_MESSAGE_IGNORE_INSERTS,
@@ -487,6 +489,7 @@ PyErr_SetFromErrnoWithFilenameObjects(PyObject *exc, PyObject *filenameObject, P
                 (LPWSTR) &s_buf,
                 0,                      /* size not used */
                 NULL);                  /* no args */
+#endif
             if (len==0) {
                 /* Only ever seen this in out-of-mem
                    situations */

@@ -748,7 +748,7 @@ class Popen(object):
                  restore_signals=True, start_new_session=False,
                  pass_fds=()):
         """Create new Popen instance."""
-        return False
+        return None
         _cleanup()
         # Held while anything is calling waitpid before returncode has been
         # updated to prevent clobbering returncode if wait() or poll() are
@@ -991,10 +991,10 @@ class Popen(object):
         # Windows methods
         #
         def _get_handles(self, stdin, stdout, stderr):
+            return (None, None, None, None, None, None)
             """Construct and return tuple with IO objects:
             p2cread, p2cwrite, c2pread, c2pwrite, errread, errwrite
             """
-            return (None, None, None, None, None, None)
             if stdin is None and stdout is None and stderr is None:
                 return (-1, -1, -1, -1, -1, -1)
 
