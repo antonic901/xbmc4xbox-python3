@@ -3746,7 +3746,7 @@ _listdir_windows_no_opendir(path_t *path, PyObject *list)
         /* Skip over . and .. */
         if (strcmp(FileData.cFileName, ".") != 0 &&
             strcmp(FileData.cFileName, "..") != 0) {
-            v = PyBytes_FromString(FileData.cFileName);
+            v = PyUnicode_FromString(FileData.cFileName);
             if (v == NULL) {
                 Py_DECREF(list);
                 list = NULL;
