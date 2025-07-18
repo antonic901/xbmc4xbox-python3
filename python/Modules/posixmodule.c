@@ -1273,12 +1273,12 @@ convertenviron(void)
         char *p = strchr(*e, '=');
         if (p == NULL)
             continue;
-        k = PyBytes_FromStringAndSize(*e, (int)(p-*e));
+        k = PyUnicode_FromStringAndSize(*e, (int)(p-*e));
         if (k == NULL) {
             PyErr_Clear();
             continue;
         }
-        v = PyBytes_FromStringAndSize(p+1, strlen(p+1));
+        v = PyUnicode_FromStringAndSize(p+1, strlen(p+1));
         if (v == NULL) {
             PyErr_Clear();
             Py_DECREF(k);
