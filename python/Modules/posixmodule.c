@@ -3969,7 +3969,7 @@ posix__getfullpathname(PyObject *self, PyObject *args)
     PyErr_Clear();
 #endif
 
-    if (!PyArg_ParseTuple (args, "y:_getfullpathname",
+    if (!PyArg_ParseTuple (args, "s:_getfullpathname",
                            &path))
         return NULL;
     if (win32_warn_bytes_api())
@@ -3983,7 +3983,7 @@ posix__getfullpathname(PyObject *self, PyObject *args)
         return PyUnicode_Decode(outbuf, strlen(outbuf),
                                 Py_FileSystemDefaultEncoding, NULL);
     }
-    return PyBytes_FromString(outbuf);
+    return PyUnicode_FromString(outbuf);
 } /* end of posix__getfullpathname */
 
 
