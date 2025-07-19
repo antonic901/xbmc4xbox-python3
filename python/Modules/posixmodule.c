@@ -851,7 +851,7 @@ path_converter(PyObject *o, void *p) {
 
     unicode = PyUnicode_FromObject(o);
     if (unicode) {
-#ifdef MS_WINDOWS
+#if defined(MS_WINDOWS) && !defined(_XBOX)
         wchar_t *wide;
 
         wide = PyUnicode_AsUnicodeAndSize(unicode, &length);
