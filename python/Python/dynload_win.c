@@ -184,7 +184,7 @@ dl_funcptr _PyImport_GetDynLoadWindows(const char *shortname,
     wchar_t *wpathname;
 #endif
 
-#ifndef _DEBUG
+#if !defined(_DEBUG) && !defined(_XBOX) 
     _Py_CheckPython3();
 #endif
 
