@@ -178,15 +178,25 @@ dl_funcptr _PyImport_GetDynLoadWindows(const char *shortname,
 {
     dl_funcptr p;
     char funcname[258], *import_python;
+#ifdef _XBOX
+    char *wpathname;
+#else
     wchar_t *wpathname;
+#endif
 
 #ifndef _DEBUG
     _Py_CheckPython3();
 #endif
 
+#ifdef _XBOX
+    wpathname = PyUnicode_AsUTF8(pathname);
+    if (wpathname == NULL)
+        return NULL;
+#else
     wpathname = PyUnicode_AsUnicode(pathname);
     if (wpathname == NULL)
         return NULL;
+#endif
 
     PyOS_snprintf(funcname, sizeof(funcname), "PyInit_%.200s", shortname);
 
@@ -206,8 +216,13 @@ dl_funcptr _PyImport_GetDynLoadWindows(const char *shortname,
         /* We use LoadLibraryEx so Windows looks for dependent DLLs
             in directory of pathname first. */
         /* XXX This call doesn't exist in Windows CE */
+#ifdef _XBOX
+        hDLL = LoadLibraryExA(wpathname, NULL,
+                              LOAD_WITH_ALTERED_SEARCH_PATH);
+#else
         hDLL = LoadLibraryExW(wpathname, NULL,
                               LOAD_WITH_ALTERED_SEARCH_PATH);
+#endif
 #if HAVE_SXS
         _Py_DeactivateActCtx(cookie);
 #endif
