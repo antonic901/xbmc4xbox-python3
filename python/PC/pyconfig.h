@@ -445,7 +445,7 @@ Py_NO_ENABLE_SHARED to find out.  Also support MS_NO_COREDLL for b/w compat */
 /* Fairly standard from here! */
 
 /* Define to 1 if you have the `copysign' function. */
-#define HAVE_COPYSIGN 1
+// #define HAVE_COPYSIGN 1
 
 /* Define to 1 if you have the `round' function. */
 #if _MSC_VER >= 1800
