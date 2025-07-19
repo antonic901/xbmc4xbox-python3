@@ -226,7 +226,7 @@ fileio_init(PyObject *oself, PyObject *args, PyObject *kwds)
     PyObject *nameobj, *stringobj = NULL, *opener = Py_None;
     char *mode = "r";
     char *s;
-#ifdef MS_WINDOWS
+#if defined(MS_WINDOWS) && !defined(_XBOX)
     Py_UNICODE *widename = NULL;
 #endif
     int ret = 0;
@@ -273,7 +273,7 @@ fileio_init(PyObject *oself, PyObject *args, PyObject *kwds)
         PyErr_Clear();
     }
 
-#ifdef MS_WINDOWS
+#if defined(MS_WINDOWS) && !defined(_XBOX)
     if (PyUnicode_Check(nameobj)) {
         Py_ssize_t length;
         widename = PyUnicode_AsUnicodeAndSize(nameobj, &length);
@@ -382,7 +382,7 @@ fileio_init(PyObject *oself, PyObject *args, PyObject *kwds)
         errno = 0;
         if (opener == Py_None) {
             Py_BEGIN_ALLOW_THREADS
-#ifdef MS_WINDOWS
+#if defined(MS_WINDOWS) && !defined(_XBOX)
             if (widename != NULL)
                 self->fd = _wopen(widename, flags, 0666);
             else
